@@ -1,4 +1,4 @@
-# PlaytestAbacus
+# Playtest Abacus
 ##(Android Development)
 
 A tracking tool for GUR playtest sessions, aimed for mobile or tablet devices: 
