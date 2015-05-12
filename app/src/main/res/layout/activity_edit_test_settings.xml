@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="javcarroz.com.playtestabacus.ui.activities.EditTestSettingsActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/projectNameField"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/project_name_hint_text"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clientNameField"
+        android:layout_below="@+id/projectNameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/client_name_hint_text"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productNameField"
+        android:hint="@string/product_name_hint_text"
+        android:layout_below="@+id/clientNameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/participants_number_text"
+        android:id="@+id/numPartLabel"
+        android:layout_below="@+id/productNameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp"
+        android:layout_alignBottom="@+id/numPartInput"
+        android:gravity="center_vertical"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/numPartInput"
+        android:layout_below="@+id/productNameField"
+        android:layout_toRightOf="@+id/numPartLabel"
+        android:layout_toEndOf="@+id/numPartLabel"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/codingField"
+        android:layout_below="@+id/numPartLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/naming_convention_hint_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clock_text"
+        android:id="@+id/testTimerLabel"
+        android:layout_below="@+id/codingField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp"
+        android:layout_alignBottom="@+id/testTimerInput"
+        android:gravity="center_vertical"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/testTimerInput"
+        android:layout_below="@+id/codingField"
+        android:layout_toRightOf="@+id/testTimerLabel"
+        android:layout_toEndOf="@+id/testTimerLabel"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_test_button_text"
+        android:id="@+id/startTestButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

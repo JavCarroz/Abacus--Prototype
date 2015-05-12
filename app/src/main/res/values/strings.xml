@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">PlaytestAbacus</string>
+
+
+
+    <!-- String resources used in the MainActivity plus its fragments -->
+
+    <string name="title_section1">Ongoing tests</string>
+    <string name="title_section2">Archives</string>
+
+        <!-- Resources for the archive fragment -->
+        <string name="empty_archive_message">No playtest has been archived!</string>
+        <!-- Resources for the archive fragment -->
+        <string name="empty_inbox_message">Nothing in development yet...</string>
+
+    <!-- String resources used by the Login and SignUp Activities -->
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">SIGN IN</string>
+    <string name="signUp_text">Don\'t have an account? Sign up!</string>
+    <string name="signUp_button">SIGN UP</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="email_hint">Email</string>
+
+        <!-- Error Messages -->
+        <string name="sign_up_error_message">Please make sure you enter an username, password, and email address!</string>
+        <string name="sign_up_error_title">Oops!</string>
+        <string name="login_error_message">Please make sure you enter an username and password!</string>
+        <string name="login_error_title">Oops!</string>
+
+
+    <!-- String resources used by the Action Bar across multiple Activities -->
+
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="menu_playtest_label">New Playtest</string>
+
+        <!-- Values for the action bar playtest action -->
+
+        <string-array name="playtest_choices">
+            <item>Start new playtest</item>
+            <item>Export a test</item>
+        </string-array>
+
+    <!-- String resources used by the EditTestSettingsActivity -->
+    <string name="title_activity_edit_test_settings">EditTestSettingsActivity</string>
+    <string name="project_name_hint_text">Project Name</string>
+    <string name="client_name_hint_text">Client Name</string>
+    <string name="participants_number_text"># of Participants</string>
+    <string name="naming_convention_hint_text">Participants coding</string>
+    <string name="clock_text">Test timer</string>
+    <string name="start_test_button_text">Begin UX!</string>
+    <string name="product_name_hint_text">Product Name</string>
+
+
+    <!-- String resources used by the PlaytestActivity -->
+    <string name="title_activity_playtest">PlaytestActivity</string>
+    <string name="first_setup_settings_text">Please make sure you enter a project name, test time, and number of participants!</string>
+    <string name="first_setup_settings_title">Oops, not yet!</string>
+    <string name="add_extra_button_text">Add</string>
+    <string name="no_participants_data">Oops! no data to show...</string>
+
+
+</resources>
