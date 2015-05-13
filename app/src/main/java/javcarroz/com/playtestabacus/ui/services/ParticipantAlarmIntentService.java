@@ -57,7 +57,7 @@ public class ParticipantAlarmIntentService extends IntentService {
 
         //notify
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle(getString(R.string.notification_participanttimer_title))
+                .setContentTitle(getString(R.string.notification_participanttimer_title) + " (" + projectId + ")")
                 .setContentText(getString(R.string.notification_participanttimer_message))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
