@@ -95,8 +95,26 @@ public class PlaytestActivity extends ListActivity {
         String message = "This is participant number " + position;
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
-        //startParticipant(project, participant);
-        mParticipantAlarmManager.schedule(mProjectId, "abc", 6000);
+        Participant participant = (Participant) mAdapter.getItem(position);
+
+        //boolean isPaused = participant.getPaused(); //TODO: RETURN BOOLEAN
+        // assuming at this point that if there's any value in the remainder key, it is paused
+        boolean isPaused = participant.getRemainderTime() != null && participant.getRemainderTime().trim().length() > 0;
+
+        Log.i(AppConstants.TAG, "isPaused=" + isPaused);
+
+        if (isPaused) {
+            //long reminder = Long.valueOf(participant.getRemainderTime()); //if in seconds, convert to milli with "X * 1000"
+            participant.setRemainderTime("");
+            long inMillis = 4 * 1000; //TODO: Get Playtest duration in milliseconds minus remainder in milliseconds
+            startParticipant(mProjectId, participant, inMillis);
+        } else {
+            participant.setRemainderTime("1234");
+            pauseParticipant(mProjectId, participant);
+        }
+
+        //notify of changes either way (paused or resumed)
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -129,9 +147,8 @@ public class PlaytestActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void startParticipant(ParseObject project, Participant participant) {
-        long duration = 2 * 1000; //TODO: Get Playtest duration in milliseconds (minus any remaining time if paused at some point)
-        mParticipantAlarmManager.schedule(project.getObjectId(), participant, duration);
+    private void startParticipant(String projectId, Participant participant, long inMillis) {
+        mParticipantAlarmManager.schedule(projectId, participant, inMillis);
     }
 
     private void pauseParticipant(String projectId, Participant participant) {
