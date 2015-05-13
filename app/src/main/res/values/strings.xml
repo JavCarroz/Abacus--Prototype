@@ -72,8 +72,8 @@
     <string name="no_participants_data">Oops! no data to show...</string>
 
     <!-- notifications -->
-    <string name="notification_participanttimer_title">Playtest Abacus</string>
-    <string name="notification_participanttimer_message">Time\'s up!</string>
+    <string name="notification_participanttimer_title">Playtest</string>
+    <string name="notification_participanttimer_message">Test(s) finished.</string>
 
     <string name="failed_load_participants_list_text">We could not retrieve the participants list. Try Again!</string>
     <string name="failed_load_participants_list_title">They disappeared!</string>
