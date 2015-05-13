@@ -19,6 +19,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
+import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
 import javcarroz.com.playtestabacus.model.ParseConstants;
 import javcarroz.com.playtestabacus.ui.activities.PlaytestActivity;
@@ -100,6 +101,9 @@ public class InboxFragment extends ListFragment {
 
         //Code for going into the proper project to be added soon.
         Intent intent = new Intent(getListView().getContext(), PlaytestActivity.class);
+        PlaytestAbacusApplication.mProjectRef = mPlaytests.get(position);
+        String projectId = mPlaytests.get(position).getObjectId();
+        intent.putExtra("projectId", projectId);
         startActivity(intent);
     }
 }

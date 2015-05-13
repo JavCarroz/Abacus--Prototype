@@ -16,7 +16,7 @@ public final class AppConstants {
 
 
     //Default values that are used when no input is provided
-    public final static String DEFAULT_CODING = "PT_";
+    public final static String DEFAULT_CODING = "PT";
     public final static String DEFAULT_PRODUCT_NAME = "Untitled Product";
     public final static String DEFAULT_CLIENT_NAME = "Anonymous Client";
 
