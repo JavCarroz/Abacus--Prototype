@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="swipe_refresh_01">#482c6f</color>
+    <color name="swipe_refresh_02">#ad78d9</color>
+    <color name="swipe_refresh_03">#dcadf4</color>
+    <color name="swipe_refresh_04">#ad78d9</color>
+
+    <color name="sign_in_text_color">#250054</color>
+
+</resources>

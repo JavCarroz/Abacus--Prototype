@@ -1,21 +1,25 @@
 package javcarroz.com.playtestabacus.ui.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javcarroz.com.playtestabacus.R;
 import javcarroz.com.playtestabacus.model.AppConstants;
+import javcarroz.com.playtestabacus.model.ParseConstants;
+import javcarroz.com.playtestabacus.model.Participant;
 
 public class EditTestSettingsActivity extends AppCompatActivity {
 
@@ -70,11 +74,11 @@ public class EditTestSettingsActivity extends AppCompatActivity {
                         clientName = AppConstants.DEFAULT_CLIENT_NAME;
                     }
                     // check why it is not entering here
-                    else if (productName.isEmpty()) {
+                    if (productName.isEmpty()) {
                         productName = AppConstants.DEFAULT_PRODUCT_NAME;
                     }
                     // check why it is not entering here
-                    else if (coding.isEmpty()) {
+                    if (coding.isEmpty()) {
                         coding = AppConstants.DEFAULT_CODING;
                     }
                     intent.putExtra(AppConstants.CONST_CLIENT_NAME, clientName);
@@ -83,6 +87,7 @@ public class EditTestSettingsActivity extends AppCompatActivity {
 
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    initPlaytestToParse(projectName, clientName, productName, coding,formattedNumParticipants, timer);
                     startActivity(intent);
                 }
 
@@ -90,6 +95,58 @@ public class EditTestSettingsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initPlaytestToParse(String projectName, String clientName, String productName, final String coding, final int numParticipants, String timer) {
+        ParseObject playtest = new ParseObject(ParseConstants.CLASS_PLAYTESTS);
+
+        playtest.put(ParseConstants.PLAYTESTS_KEY_PROJECT_NAME, projectName);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_CLIENT_NAME, clientName);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_PRODUCT_NAME, productName);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_PART_CODE, coding);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_NUM_OF_PART, numParticipants);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_TIMER, timer);
+
+        playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_STATUS, ParseConstants.VALUE_TEST_STATUS_ONGOING);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_COMPLETED_AT, ParseConstants.VALUE_TEST_EMPTY_COMPLETED_AT);
+
+        ParseObject dataSet = new ParseObject(ParseConstants.CLASS_PARTICIPANTS);
+
+        List<Participant> participantsList = new ArrayList<Participant>();
+
+        for (int i = 1; i <= numParticipants; i++) {
+            Participant participant = new Participant();
+            String suffix = "_" + i;
+
+            participant.setSuffix(suffix);
+            participant.setStartTime("");
+            participant.setEndTime("");
+            participant.setRemainderTime("");
+            participant.setVoid(ParseConstants.VALUE_PARTICIPANT_NON_VOID_STATUS);
+            participant.setPaused(ParseConstants.VALUE_PARTICIPANT_NOT_PAUSED_STATUS);
+            participant.setParticipantStatus(ParseConstants.VALUE_PARTICIPANT_STATUS);
+            participant.put(ParseConstants.SHARED_KEY_PARENT, playtest);
+
+            participantsList.add(participant);
+        }
+
+        dataSet.saveAllInBackground(participantsList);
+
+        /*playtest.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    //success! now create the data set of participants to be tested
+                    Toast.makeText(EditTestSettingsActivity.this, R.string.playtest_to_parse_success, Toast.LENGTH_LONG).show();
+                    populatePlaytest(coding, numParticipants);
+                } else {
+                    Toast.makeText(EditTestSettingsActivity.this, R.string.error_saving_playtest_to_parse, Toast.LENGTH_LONG).show();
+                }
+            }
+        });*/
+    }
+
+    private void populatePlaytest(String coding, int numParticipants) {
     }
 
 }

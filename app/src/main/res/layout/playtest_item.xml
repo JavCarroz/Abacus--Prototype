@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/transparent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/inbox_horizontal_margin"
+        android:layout_marginRight="@dimen/inbox_horizontal_margin"
+        android:layout_marginTop="@dimen/inbox_vertical_margin"
+        android:background="@android:color/darker_gray">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/IconStatusView"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/ic_action_upload"
+            android:contentDescription="@string/icon_item_image_representation"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/projectNameLabel"
+            android:text="@string/playtest_item_layout_dummy_text_2"
+            android:layout_toLeftOf="@+id/IconStatusView"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/inbox_item_top_margin"
+            android:textSize="16sp"
+            android:textColor="@color/sign_in_text_color"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playtest_item_layout_dummy_text"
+            android:id="@+id/timeLabel"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:layout_toLeftOf="@+id/IconStatusView"
+            android:layout_below="@+id/IconStatusView"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:layout_alignParentLeft="true"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/material_blue_grey_800"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playtest_item_layout_dummy_text_3"
+            android:id="@+id/participantsProgressLabel"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:layout_toLeftOf="@+id/IconStatusView"
+            android:layout_below="@+id/timeLabel"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:layout_alignParentLeft="true"
+            android:textSize="12sp"
+            android:textColor="@color/material_blue_grey_800"
+            />
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

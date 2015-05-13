@@ -47,7 +47,8 @@
         <activity
             android:name=".ui.activities.PlaytestActivity"
             android:label="@string/title_activity_playtest"
-            android:parentActivityName=".ui.activities.MainActivity" >
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="javcarroz.com.playtestabacus.ui.activities.MainActivity" />
