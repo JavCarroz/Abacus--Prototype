@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -28,12 +29,22 @@ import javcarroz.com.playtestabacus.model.AppConstants;
 import javcarroz.com.playtestabacus.model.ParseConstants;
 import javcarroz.com.playtestabacus.ui.adapters.ParticipantAdapter;
 import javcarroz.com.playtestabacus.ui.adapters.PlaytestAdapter;
+import com.parse.ParseObject;
+
+import java.sql.ParameterMetaData;
+
+import javcarroz.com.playtestabacus.model.AppConstants;
+import javcarroz.com.playtestabacus.model.Participant;
+import javcarroz.com.playtestabacus.ui.managers.ParticipantAlarmManager;
 
 public class PlaytestActivity extends ListActivity {
 
     public final static String TAG = PlaytestActivity.class.getSimpleName();
-    protected List<ParseObject> mParticipants;
-    protected ParticipantAdapter mAdapter;
+
+    private String mProjectId;
+    private List<ParseObject> mParticipants;
+    private ParticipantAdapter mAdapter;
+    private ParticipantAlarmManager mParticipantAlarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +55,8 @@ public class PlaytestActivity extends ListActivity {
         setListAdapter(mAdapter);
 
 
-        String currentProjectUniqueId = getIntent().getStringExtra("projectId");
-        Log.i(TAG, "Project id = " + currentProjectUniqueId);
+        mProjectId = getIntent().getStringExtra("projectId");
+        Log.i(TAG, "Project id = " + mProjectId);
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Participant");
         query.whereEqualTo(ParseConstants.SHARED_KEY_PARENT, PlaytestAbacusApplication.mProjectRef);
@@ -73,6 +84,7 @@ public class PlaytestActivity extends ListActivity {
 //        Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.DAILY_FORECAST);
 //        mDays = Arrays.copyOf(parcelables, parcelables.length, Day[].class );
 
+        mParticipantAlarmManager = ParticipantAlarmManager.getInstance(this);
 
     }
 
@@ -82,6 +94,9 @@ public class PlaytestActivity extends ListActivity {
 
         String message = "This is participant number " + position;
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+        //startParticipant(project, participant);
+        mParticipantAlarmManager.schedule(mProjectId, "abc", 6000);
     }
 
     @Override
@@ -112,5 +127,14 @@ public class PlaytestActivity extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startParticipant(ParseObject project, Participant participant) {
+        long duration = 2 * 1000; //TODO: Get Playtest duration in milliseconds (minus any remaining time if paused at some point)
+        mParticipantAlarmManager.schedule(project.getObjectId(), participant, duration);
+    }
+
+    private void pauseParticipant(String projectId, Participant participant) {
+        mParticipantAlarmManager.cancel(projectId, participant);
     }
 }

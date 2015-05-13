@@ -53,6 +53,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="javcarroz.com.playtestabacus.ui.activities.MainActivity" />
         </activity>
-    </application>
 
+        <service android:name=".ui.services.ParticipantAlarmIntentService"/>
+
+    </application>
 </manifest>

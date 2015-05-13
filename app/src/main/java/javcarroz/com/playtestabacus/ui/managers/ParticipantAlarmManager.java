@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.util.HashMap;
 
+import javcarroz.com.playtestabacus.model.AppConstants;
 import javcarroz.com.playtestabacus.model.Participant;
 import javcarroz.com.playtestabacus.ui.services.ParticipantAlarmIntentService;
 
@@ -72,9 +74,12 @@ public class ParticipantAlarmManager {
     }
 
     private PendingIntent buildOperation(String projectId, String participantId) {
+        int uniqueId = getParticipantIntentId(participantId);
+
         Intent service = new Intent(mContext, ParticipantAlarmIntentService.class);
         service.putExtra(ParticipantAlarmIntentService.EXTRA_PROJECT_ID, projectId);
-        PendingIntent operation = PendingIntent.getService(mContext, getParticipantIntentId(participantId), service, 0);
+        PendingIntent operation = PendingIntent.getService(mContext, uniqueId, service, PendingIntent.FLAG_UPDATE_CURRENT);
+
         return operation;
     }
 
