@@ -3,6 +3,8 @@ package javcarroz.com.playtestabacus.model;
 
 public final class AppConstants {
 
+    public static final String TAG = "playtestabacus";
+
     //This java file is for saving parameters that are constantly used to interact within the app.
 
     public final static String CONST_PROJECT_NAME = "projectName";
