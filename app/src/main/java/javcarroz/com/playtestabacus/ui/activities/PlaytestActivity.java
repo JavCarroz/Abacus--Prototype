@@ -1,8 +1,10 @@
 package javcarroz.com.playtestabacus.ui.activities;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -12,32 +14,65 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
 import javcarroz.com.playtestabacus.model.AppConstants;
+import javcarroz.com.playtestabacus.model.ParseConstants;
+import javcarroz.com.playtestabacus.ui.adapters.ParticipantAdapter;
+import javcarroz.com.playtestabacus.ui.adapters.PlaytestAdapter;
 
 public class PlaytestActivity extends ListActivity {
 
     public final static String TAG = PlaytestActivity.class.getSimpleName();
+    protected List<ParseObject> mParticipants;
+    protected ParticipantAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playtest);
+        mParticipants = new ArrayList<>();
+        mAdapter = new ParticipantAdapter(PlaytestActivity.this, mParticipants);
+        setListAdapter(mAdapter);
 
 
-        String data01 = getIntent().getStringExtra(AppConstants.CONST_PROJECT_NAME);
-        String data02 = getIntent().getStringExtra(AppConstants.CONST_CLIENT_NAME);
-        String data03 = getIntent().getStringExtra(AppConstants.CONST_PRODUCT_NAME);
-        String data04 = getIntent().getStringExtra(AppConstants.CONST_CODING);
-        int data05 = getIntent().getIntExtra(AppConstants.CONST_NUM_OF_PARTICIPANTS, 64);
-        String data06 = getIntent().getStringExtra(AppConstants.CONST_TEST_TIMER);
+        String currentProjectUniqueId = getIntent().getStringExtra("projectId");
+        Log.i(TAG, "Project id = " + currentProjectUniqueId);
 
-        Log.i(TAG, data01 + " " + data02 + " " + data03 + " " + data04 + " " + data05 + " " + data06);
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Participant");
+        query.whereEqualTo(ParseConstants.SHARED_KEY_PARENT, PlaytestAbacusApplication.mProjectRef);
+        query.addAscendingOrder(ParseConstants.PARTICIPANTS_KEY_SUFFIX);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> participants, ParseException e) {
+                if (e == null) {
+                    //query successful!
+                    Log.i(TAG, String.valueOf(participants.size()));
+                    mParticipants.addAll(participants);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TAG, e.getMessage());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+                    builder.setMessage(R.string.failed_load_participants_list_text)
+                            .setTitle(R.string.failed_load_participants_list_title)
+                            .setPositiveButton(android.R.string.ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
 
-        String[] daysOfTheWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Manzana", "Jorge", "Penguin",
-            "Chicken", "Bottle", "TV", "Sofa", "Cat", "Backpack", "Laptop", "Piano"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, daysOfTheWeek);
-        setListAdapter(adapter);
+//        Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.DAILY_FORECAST);
+//        mDays = Arrays.copyOf(parcelables, parcelables.length, Day[].class );
+
 
     }
 
@@ -45,8 +80,16 @@ public class PlaytestActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        String message = "This is list item number " + position;
+        String message = "This is participant number " + position;
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PlaytestActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override

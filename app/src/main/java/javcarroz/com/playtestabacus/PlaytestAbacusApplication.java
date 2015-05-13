@@ -9,6 +9,7 @@ import javcarroz.com.playtestabacus.model.Participant;
 
 public class PlaytestAbacusApplication extends Application{
 
+    public static ParseObject mProjectRef;
 
     @Override
     public void onCreate(){

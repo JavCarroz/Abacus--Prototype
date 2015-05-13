@@ -18,7 +18,7 @@ public class Participant extends ParseObject {
         return getString(mSuffix);
     }
 
-    public void setSuffix(String suffix) {
+    public void setSuffix(int suffix) {
         put(mSuffix, suffix);
     }
 
