@@ -38,7 +38,7 @@ public class ParticipantAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public ParseObject getItem(int position) {
         return mParticipants.get(position);
     }
 
