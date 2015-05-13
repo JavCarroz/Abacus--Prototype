@@ -72,6 +72,8 @@
     <string name="no_participants_data">Oops! no data to show...</string>
 
 
-
+    <!-- notifications -->
+    <string name="notification_participanttimer_title">Playtest Abacus</string>
+    <string name="notification_participanttimer_message">Time's up!</string>
 
 </resources>
