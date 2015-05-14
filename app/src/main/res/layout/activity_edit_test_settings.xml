@@ -74,22 +74,11 @@
         android:layout_height="wrap_content"
         android:text="@string/clock_text"
         android:id="@+id/testTimerLabel"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
         android:layout_below="@+id/codingField"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="16sp"
-        android:layout_alignBottom="@+id/testTimerInput"
-        android:gravity="center_vertical"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/testTimerInput"
-        android:layout_below="@+id/codingField"
-        android:layout_toRightOf="@+id/testTimerLabel"
-        android:layout_toEndOf="@+id/testTimerLabel"/>
+        android:layout_alignParentStart="true"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -98,5 +87,15 @@
         android:id="@+id/startTestButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/testTimerInput"
+        android:layout_below="@+id/testTimerLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

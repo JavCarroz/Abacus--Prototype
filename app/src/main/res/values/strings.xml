@@ -57,7 +57,7 @@
     <string name="client_name_hint_text">Client Name</string>
     <string name="participants_number_text"># of Participants</string>
     <string name="naming_convention_hint_text">Participant\'s code (MAX 4)</string>
-    <string name="clock_text">Test timer</string>
+    <string name="clock_text">Test timer: (hh:mm:ss)</string>
     <string name="start_test_button_text">Begin UX!</string>
     <string name="product_name_hint_text">Product Name</string>
     <string name="first_setup_settings_text">Please make sure you enter a project name, test time, and number of participants!</string>
@@ -68,7 +68,7 @@
 
     <!-- String resources used by the PlaytestActivity -->
     <string name="title_activity_playtest">PlaytestActivity</string>
-    <string name="add_extra_button_text">Add</string>
+    <string name="add_extra_button_text">Conclude Playtest!</string>
     <string name="no_participants_data">Oops! no data to show...</string>
     <string name="failed_load_participants_list_text">We could not retrive the participants list. Try Again!</string>
     <string name="failed_load_participants_list_title">They disappeared!</string>

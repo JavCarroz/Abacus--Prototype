@@ -18,9 +18,9 @@ import java.util.List;
 
 import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
-import javcarroz.com.playtestabacus.model.AppConstants;
-import javcarroz.com.playtestabacus.model.ParseConstants;
-import javcarroz.com.playtestabacus.model.Participant;
+import javcarroz.com.playtestabacus.data.AppConstants;
+import javcarroz.com.playtestabacus.data.ParseConstants;
+import javcarroz.com.playtestabacus.data.Participant;
 
 public class EditTestSettingsActivity extends AppCompatActivity {
 
@@ -128,7 +128,6 @@ public class EditTestSettingsActivity extends AppCompatActivity {
                     Toast.makeText(EditTestSettingsActivity.this, R.string.playtest_to_parse_success, Toast.LENGTH_LONG).show();
                     PlaytestAbacusApplication.mProjectRef = playtest;
                     Intent intent = new Intent(EditTestSettingsActivity.this, PlaytestActivity.class);
-                    intent.putExtra("projectId", projectId);
                     startActivity(intent);
                 } else {
                     Toast.makeText(EditTestSettingsActivity.this, R.string.error_saving_playtest_to_parse, Toast.LENGTH_LONG).show();

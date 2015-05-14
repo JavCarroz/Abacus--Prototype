@@ -2,19 +2,19 @@ package javcarroz.com.playtestabacus.ui.activities;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -24,28 +24,33 @@ import java.util.List;
 
 import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
-import javcarroz.com.playtestabacus.model.AppConstants;
-import javcarroz.com.playtestabacus.model.ParseConstants;
+import javcarroz.com.playtestabacus.data.ParseConstants;
 import javcarroz.com.playtestabacus.ui.adapters.ParticipantAdapter;
-import javcarroz.com.playtestabacus.ui.adapters.PlaytestAdapter;
 
 public class PlaytestActivity extends ListActivity {
 
     public final static String TAG = PlaytestActivity.class.getSimpleName();
     protected List<ParseObject> mParticipants;
     protected ParticipantAdapter mAdapter;
+    private TextView mTestProgress;
+    private Button mConcludeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playtest);
         mParticipants = new ArrayList<>();
+        mTestProgress = (TextView) findViewById(R.id.testCountdownLabel);
+        mConcludeButton = (Button) findViewById(R.id.concludeTestButton);
         mAdapter = new ParticipantAdapter(PlaytestActivity.this, mParticipants);
         setListAdapter(mAdapter);
 
-
-        String currentProjectUniqueId = getIntent().getStringExtra("projectId");
-        Log.i(TAG, "Project id = " + currentProjectUniqueId);
+        final View.OnClickListener concludeButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                concludePlaytest(mParticipants,PlaytestAbacusApplication.mProjectRef );
+            }
+        };
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Participant");
         query.whereEqualTo(ParseConstants.SHARED_KEY_PARENT, PlaytestAbacusApplication.mProjectRef);
@@ -55,9 +60,20 @@ public class PlaytestActivity extends ListActivity {
             public void done(List<ParseObject> participants, ParseException e) {
                 if (e == null) {
                     //query successful!
-                    Log.i(TAG, String.valueOf(participants.size()));
                     mParticipants.addAll(participants);
                     mAdapter.notifyDataSetChanged();
+                    mConcludeButton.setVisibility(View.VISIBLE);
+                    mConcludeButton.setOnClickListener(concludeButtonListener);
+
+//                    for (ParseObject participant: mParticipants) {
+//                        if (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PARTICIPANT_STATUS) == 1){
+//
+//                        }
+//                    }
+//
+//                    mTestProgress.setText();
+
+
                 } else {
                     Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
@@ -70,10 +86,35 @@ public class PlaytestActivity extends ListActivity {
             }
         });
 
-//        Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.DAILY_FORECAST);
-//        mDays = Arrays.copyOf(parcelables, parcelables.length, Day[].class );
 
 
+
+    }
+
+    private void concludePlaytest(List<ParseObject> participants, ParseObject project) {
+
+        for(ParseObject participant: participants){
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Participant");
+            query.getInBackground(participant.getObjectId(), new GetCallback<ParseObject>() {
+                public void done(ParseObject part, ParseException e) {
+                    if (e == null) {
+                        part.put(ParseConstants.PARTICIPANTS_KEY_PARTICIPANT_STATUS, 1);
+                        part.saveInBackground();
+                    }
+                }
+            });
+        }
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(ParseConstants.CLASS_PLAYTESTS);
+        query.getInBackground(project.getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject proj, ParseException e) {
+                if (e == null) {
+                    proj.put(ParseConstants.PLAYTESTS_KEY_TEST_STATUS, 2);
+                    proj.saveInBackground();
+                }
+            }
+        });
+        finish();
     }
 
     @Override
@@ -92,25 +133,4 @@ public class PlaytestActivity extends ListActivity {
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_playtest, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

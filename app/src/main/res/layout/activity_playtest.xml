@@ -30,7 +30,7 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:layout_below="@+id/testCountdownLabel"
-        android:layout_above="@+id/addExtraButton"/>
+        android:layout_above="@+id/concludeTestButton"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,8 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_extra_button_text"
-        android:id="@+id/addExtraButton"
+        android:id="@+id/concludeTestButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

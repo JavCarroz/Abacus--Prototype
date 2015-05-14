@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import javcarroz.com.playtestabacus.R;
-import javcarroz.com.playtestabacus.model.ParseConstants;
+import javcarroz.com.playtestabacus.data.ParseConstants;
 
 public class PlaytestAdapter extends ArrayAdapter<ParseObject> {
 
@@ -38,7 +38,7 @@ public class PlaytestAdapter extends ArrayAdapter<ParseObject> {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.playtest_item, null);
             holder = new ViewHolder();
 
-            holder.iconStatusView = (ImageView) convertView.findViewById(R.id.IconStatusView);
+            holder.iconStatusView = (ImageView) convertView.findViewById(R.id.iconStatusView);
             holder.projectNameLabel = (TextView) convertView.findViewById(R.id.projectNameLabel);
             holder.createdAtLabel = (TextView) convertView.findViewById(R.id.timeLabel);
             holder.participantsProgress = (TextView) convertView.findViewById(R.id.participantsProgressLabel);

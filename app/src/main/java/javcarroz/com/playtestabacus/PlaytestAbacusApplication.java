@@ -5,7 +5,7 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-import javcarroz.com.playtestabacus.model.Participant;
+import javcarroz.com.playtestabacus.data.Participant;
 
 public class PlaytestAbacusApplication extends Application{
 

@@ -21,7 +21,7 @@ import java.util.List;
 
 import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
-import javcarroz.com.playtestabacus.model.ParseConstants;
+import javcarroz.com.playtestabacus.data.ParseConstants;
 import javcarroz.com.playtestabacus.ui.activities.PlaytestActivity;
 import javcarroz.com.playtestabacus.ui.adapters.PlaytestAdapter;
 

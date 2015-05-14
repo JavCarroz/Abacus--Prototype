@@ -12,43 +12,95 @@
         android:layout_marginTop="@dimen/inbox_vertical_margin"
         android:background="@android:color/darker_gray">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/IconStatusView"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:src="@mipmap/ic_action_edit"
-            android:contentDescription="@string/icon_item_image_representation"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/participantCode"
-            android:text="@string/participant_dummy_code"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/inbox_item_top_margin"
-            android:textSize="16sp"
-            android:textColor="@color/sign_in_text_color"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:weightSum="99"
+            android:id="@+id/mainLinearLayout">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:paddingLeft="6dp"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/participantCode"
+                    android:text="@string/participant_dummy_code"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/sign_in_text_color"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="33">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clock_dummy_text"
+                    android:id="@+id/clock"
+                    android:textSize="18sp"
+                    android:textColor="@color/material_blue_grey_800"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="33">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iconStatusView"
+                    android:src="@mipmap/ic_action_edit"
+
+                    android:contentDescription="@string/icon_item_image_representation"
+                    android:layout_gravity="right"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:paddingRight="6dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/clock_dummy_text"
-            android:id="@+id/clock"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:layout_toLeftOf="@+id/IconStatusView"
-            android:layout_toRightOf="@id/participantCode"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:textSize="12sp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/material_blue_grey_800"
-            />
+            android:layout_below="@+id/mainLinearLayout"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/buttonsLinearLayout"
+            android:weightSum="100">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:id="@+id/startPauseButton"
+                android:layout_weight="50"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unvalid?"
+                android:id="@+id/unvalidButton"
+                android:layout_weight="50"/>
+
+        </LinearLayout>
 
 
     </RelativeLayout>
