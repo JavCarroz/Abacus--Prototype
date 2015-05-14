@@ -9,7 +9,8 @@
     <string name="title_section2">Archives</string>
 
         <!-- Resources for the archive fragment -->
-        <string name="empty_archive_message">No playtest has been archived!</string>
+        <!-- <string name="empty_archive_message">No playtest has been archived!</string>  -->
+        <string name="empty_archive_message">This fragment\'s UI has not been implemented yet!</string>
 
         <!-- Resources for the inbox fragment -->
         <string name="empty_inbox_message">Nothing in development yet...</string>
@@ -68,12 +69,16 @@
 
     <!-- String resources used by the PlaytestActivity -->
     <string name="title_activity_playtest">PlaytestActivity</string>
-    <string name="add_extra_button_text">Conclude Playtest!</string>
+    <string name="conclude_button_text">Conclude Playtest!</string>
+    <string name="add_extra_button_text">Add Participant</string>
     <string name="no_participants_data">Oops! no data to show...</string>
     <string name="failed_load_participants_list_text">We could not retrive the participants list. Try Again!</string>
     <string name="failed_load_participants_list_title">They disappeared!</string>
     <string name="participant_dummy_code">ABCD_20</string>
     <string name="clock_dummy_text">1:00:00</string>
+    <string name="start_participant_text">start</string>
+    <string name="resume_participant_text">resume</string>
+    <string name="pause_participant_text">pause</string>
 
 
 </resources>

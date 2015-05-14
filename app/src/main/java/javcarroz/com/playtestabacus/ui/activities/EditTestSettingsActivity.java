@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
@@ -69,11 +70,9 @@ public class EditTestSettingsActivity extends AppCompatActivity {
                     if (clientName.isEmpty()) {
                         clientName = AppConstants.DEFAULT_CLIENT_NAME;
                     }
-                    // check why it is not entering here
                     if (productName.isEmpty()) {
                         productName = AppConstants.DEFAULT_PRODUCT_NAME;
                     }
-                    // check why it is not entering here
                     if (coding.isEmpty()) {
                         coding = AppConstants.DEFAULT_CODING;
                     }
@@ -98,6 +97,7 @@ public class EditTestSettingsActivity extends AppCompatActivity {
         playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_TIMER, timer);
         playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_STATUS, ParseConstants.VALUE_TEST_STATUS_ONGOING);
         playtest.put(ParseConstants.PLAYTESTS_KEY_COMPLETED_AT, ParseConstants.VALUE_TEST_EMPTY_COMPLETED_AT);
+        playtest.put(ParseConstants.PLAYTESTS_KEY_BELONGS_TO, ParseUser.getCurrentUser());
 
         ParseObject dataSet = new ParseObject(ParseConstants.CLASS_PARTICIPANTS);
 
@@ -105,9 +105,10 @@ public class EditTestSettingsActivity extends AppCompatActivity {
 
         for (int i = 1; i <= numParticipants; i++) {
             Participant participant = new Participant();
-            int suffix = i;
 
-            participant.setSuffix(suffix);
+            participant.setSuffix(i);
+            //init these 3 time values as empty strings.
+            // Once a participant timer is init for the 1st time we will update to save the unixtime as string (Parse can't handle unixtime).
             participant.setStartTime("");
             participant.setEndTime("");
             participant.setRemainderTime("");
@@ -124,7 +125,6 @@ public class EditTestSettingsActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     //success!
-                    String projectId = playtest.getObjectId();
                     Toast.makeText(EditTestSettingsActivity.this, R.string.playtest_to_parse_success, Toast.LENGTH_LONG).show();
                     PlaytestAbacusApplication.mProjectRef = playtest;
                     Intent intent = new Intent(EditTestSettingsActivity.this, PlaytestActivity.class);

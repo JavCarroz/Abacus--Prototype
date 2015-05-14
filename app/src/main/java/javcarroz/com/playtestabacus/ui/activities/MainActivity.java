@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     startActivity(intent);
                     break;
                 case 1:
-                    //
+                    //Here we will handle the export files case
                     break;
             }
         }
@@ -146,8 +146,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 dialog.show();
                 break;
             case R.id.action_settings:
-//                Intent intent = new Intent(this, EditTestSettingsActivity.class);
-//                startActivity(intent);
+                //Users will be able to set default values when creating a playtest
                 break;
             case R.id.action_logout:
                 ParseUser.logOut();
@@ -160,8 +159,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
     }
 

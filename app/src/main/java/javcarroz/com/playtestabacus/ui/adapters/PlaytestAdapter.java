@@ -62,8 +62,8 @@ public class PlaytestAdapter extends ArrayAdapter<ParseObject> {
         }
 
         int numOfParts = playtest.getInt(ParseConstants.PLAYTESTS_KEY_NUM_OF_PART);
-        //Need to pull the current number of completed participants from a given playtest!
-        holder.participantsProgress.setText("XX completed out of " + numOfParts + " participants");
+        //Change later to reflect the number of completed participants out of the total!
+        holder.participantsProgress.setText(numOfParts + " participants");
         holder.createdAtLabel.setText(convertedDate);
         holder.projectNameLabel.setText(playtest.getString(ParseConstants.PLAYTESTS_KEY_PROJECT_NAME));
 

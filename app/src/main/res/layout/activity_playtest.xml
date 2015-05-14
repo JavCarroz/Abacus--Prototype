@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="18/64 COMPLETED"
+        android:text="18/64 COMPLETED (Dummy data)"
         android:id="@+id/testCountdownLabel"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -30,7 +30,7 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:layout_below="@+id/testCountdownLabel"
-        android:layout_above="@+id/concludeTestButton"/>
+        android:layout_above="@+id/buttonsLinearLayout"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,13 +40,37 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_extra_button_text"
-        android:id="@+id/concludeTestButton"
+        android:id="@+id/buttonsLinearLayout"
+        android:weightSum="100"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/conclude_button_text"
+            android:id="@+id/concludeTestButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:layout_weight="50"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_extra_button_text"
+            android:id="@+id/addExtraButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:layout_weight="50"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

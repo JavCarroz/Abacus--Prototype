@@ -16,6 +16,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class InboxFragment extends ListFragment {
     private void retrieveTests() {
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_PLAYTESTS);
         query.whereNotEqualTo(ParseConstants.PLAYTESTS_KEY_TEST_STATUS, ParseConstants.VALUE_TEST_STATUS_DONE);
+        query.whereEqualTo(ParseConstants.PLAYTESTS_KEY_BELONGS_TO, ParseUser.getCurrentUser());
         query.addAscendingOrder(ParseConstants.SHARED_KEY_CREATED_AT);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -98,12 +100,8 @@ public class InboxFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
-        //Code for going into the proper project to be added soon.
         Intent intent = new Intent(getListView().getContext(), PlaytestActivity.class);
         PlaytestAbacusApplication.mProjectRef = mPlaytests.get(position);
-        String projectId = mPlaytests.get(position).getObjectId();
-        intent.putExtra("projectId", projectId);
         startActivity(intent);
     }
 }

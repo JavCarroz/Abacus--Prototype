@@ -46,8 +46,8 @@ public class Participant extends ParseObject {
         put(mVoid, aVoid);
     }
 
-    public String getPaused() {
-        return getString(mPaused);
+    public int getPaused() {
+        return getInt(mPaused);
     }
 
     public void setPaused(int paused) {
