@@ -99,25 +99,31 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
 
         else {
             holder.iconStatus.setImageResource(R.mipmap.ic_action_edit);
-            holder.clock.setText(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
             holder.invalidButton.setOnClickListener(this);
 
             if (!isInitialized(participant)) {
                 //Starts for the first time
+                long initTestTimer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
+
+                holder.clock.setText(initTestTimer+"");
                 holder.startPauseButton.setText(R.string.start_participant_text);
             }
             else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1) ) {
                 //resuming the countdown
                 holder.startPauseButton.setText(R.string.resume_participant_text);
+                long seconds = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME));
+                holder.clock.setText(seconds+"");
             }
             else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0) ) {
                 //countdown is running
                 holder.startPauseButton.setText(R.string.pause_participant_text);
                 long now = System.currentTimeMillis();
-                long formattedInitDate = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME));
-                long diff = (now - formattedInitDate);
+                long longInitDate = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME));
+                long diff = (now - longInitDate);
                 long seconds = diff /1000;
-                holder.clock.setText(seconds +" secs (since started)");
+                SimpleDateFormat formatter = new SimpleDateFormat("k:m:s");
+                String formattedTimerString = formatter.format(seconds);
+                holder.clock.setText(formattedTimerString);
                 //Need to format this output. Currently shows the amount of seconds that have passed since being init.
             }
 
@@ -138,47 +144,37 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
             if (!isInitialized(p)) {
                 //Participant has not been initialized yet!
 
-                final String initDate = System.currentTimeMillis()+ "";
-                Log.i("insideClick", initDate);
-                p.put(ParseConstants.PARTICIPANTS_KEY_START_TIME, initDate);
-                p.saveInBackground();
-            }
-            else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0)) {
-                Toast.makeText(v.getContext(), "Pause is in development", Toast.LENGTH_LONG).show();
-            }
-
-            /*
-            else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1)) {
-                //Participant has been initialized but is currently paused!
-                p.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME);
-                //Restarts the timer with this time
-                p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 0);
+                final String initTime = System.currentTimeMillis()+ "";
+                Log.i("initClick", initTime);
+                p.put(ParseConstants.PARTICIPANTS_KEY_START_TIME, initTime);
                 p.saveInBackground();
             }
 
             else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0)) {
-                //Participant is currently running
-                Date currentTime = new Date();
-                SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy, H:m"); //May 13, 2015, 23:26
-                final String convertedDate = formatter.format(currentTime);
+                //Participant has been initialized and its time is currently running.
+                String init = p.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME);
+                String remainder = p.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME);
+                long timer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
+                long elapsedTime;
 
-                            String remainderTime = part.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME);
-                            if (remainderTime.isEmpty()) {
-                                String startDate = part.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME);
-                                DateFormat format = new SimpleDateFormat("MMM d, yyyy, H:m", Locale.ENGLISH);
-                                try {
-                                    Date initDate= format.parse(startDate);
-                                } catch (java.text.ParseException e1) {
-                                    e1.printStackTrace();
-                                }
-
-                            }
-                            part.put(ParseConstants.PARTICIPANTS_KEY_START_TIME, convertedDate);
-                            part.saveInBackground();
-                        }
-                    }
-                });
-            }*/
+                if (remainder.isEmpty()) {
+                    //it has not been paused before
+                    long queryInitTime = Long.parseLong(init);
+                    final long newPauseTime = System.currentTimeMillis();
+                    elapsedTime = (timer - (newPauseTime - queryInitTime));
+                    Log.i("Elapsed", elapsedTime + "");
+                }
+                else {
+                    //it had a previous pause
+                    long queryInitTime = Long.parseLong(remainder);
+                    final long newPauseTime = System.currentTimeMillis();
+                    elapsedTime = (newPauseTime - queryInitTime);
+                    Log.i("ElapsedPause", elapsedTime + "");
+                }
+                p.put(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME, elapsedTime + "");
+                p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 1);
+                p.saveInBackground();
+            }
 
         }
         //End of: handling the events relating to the startPauseButton

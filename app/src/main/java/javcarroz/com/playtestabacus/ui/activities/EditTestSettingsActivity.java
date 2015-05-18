@@ -94,6 +94,7 @@ public class EditTestSettingsActivity extends AppCompatActivity {
         playtest.put(ParseConstants.PLAYTESTS_KEY_PRODUCT_NAME, productName);
         playtest.put(ParseConstants.PLAYTESTS_KEY_PART_CODE, coding + "_");
         playtest.put(ParseConstants.PLAYTESTS_KEY_NUM_OF_PART, numParticipants);
+        //Save timer as a milliseconds string
         playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_TIMER, timer);
         playtest.put(ParseConstants.PLAYTESTS_KEY_TEST_STATUS, ParseConstants.VALUE_TEST_STATUS_ONGOING);
         playtest.put(ParseConstants.PLAYTESTS_KEY_COMPLETED_AT, ParseConstants.VALUE_TEST_EMPTY_COMPLETED_AT);
