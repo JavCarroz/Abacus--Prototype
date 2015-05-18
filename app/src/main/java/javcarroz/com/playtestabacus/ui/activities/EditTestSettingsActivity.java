@@ -113,6 +113,7 @@ public class EditTestSettingsActivity extends AppCompatActivity {
             participant.setStartTime("");
             participant.setEndTime("");
             participant.setRemainderTime("");
+            participant.setPreviousUnpauseTime("");
             participant.setVoid(ParseConstants.VALUE_PARTICIPANT_NON_VOID_STATUS);
             participant.setPaused(ParseConstants.VALUE_PARTICIPANT_NOT_PAUSED_STATUS);
             participant.setParticipantStatus(ParseConstants.VALUE_PARTICIPANT_STATUS);

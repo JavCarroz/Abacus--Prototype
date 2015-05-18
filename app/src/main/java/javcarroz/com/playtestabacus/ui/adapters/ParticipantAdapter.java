@@ -104,15 +104,8 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
             if (!isInitialized(participant)) {
                 //Starts for the first time
                 long initTestTimer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
-
                 holder.clock.setText(initTestTimer+"");
                 holder.startPauseButton.setText(R.string.start_participant_text);
-            }
-            else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1) ) {
-                //resuming the countdown
-                holder.startPauseButton.setText(R.string.resume_participant_text);
-                long seconds = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME));
-                holder.clock.setText(seconds+"");
             }
             else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0) ) {
                 //countdown is running
@@ -121,10 +114,14 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
                 long longInitDate = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME));
                 long diff = (now - longInitDate);
                 long seconds = diff /1000;
-                SimpleDateFormat formatter = new SimpleDateFormat("k:m:s");
-                String formattedTimerString = formatter.format(seconds);
-                holder.clock.setText(formattedTimerString);
+                holder.clock.setText(seconds+"");
                 //Need to format this output. Currently shows the amount of seconds that have passed since being init.
+            }
+            else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1) ) {
+                //resuming the countdown
+                holder.startPauseButton.setText(R.string.resume_participant_text);
+                long seconds = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME));
+                holder.clock.setText(seconds+"");
             }
 
             holder.startPauseButton.setOnClickListener(this);
@@ -139,7 +136,9 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
         //Start of: handling the events relating to the startPauseButton
         if (v.getId() == R.id.startPauseButton) {
             int position = ((Integer) v.getTag());
+            long testTimer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
             Participant p = (Participant) getItem(position);
+
 
             if (!isInitialized(p)) {
                 //Participant has not been initialized yet!
@@ -152,28 +151,32 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
 
             else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0)) {
                 //Participant has been initialized and its time is currently running.
-                String init = p.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME);
                 String remainder = p.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME);
-                long timer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
-                long elapsedTime;
+                long elapsedTime = System.currentTimeMillis();
+                long timeToEnd;
 
                 if (remainder.isEmpty()) {
                     //it has not been paused before
-                    long queryInitTime = Long.parseLong(init);
-                    final long newPauseTime = System.currentTimeMillis();
-                    elapsedTime = (timer - (newPauseTime - queryInitTime));
-                    Log.i("Elapsed", elapsedTime + "");
+                    long initTime = Long.parseLong(p.getString(ParseConstants.PARTICIPANTS_KEY_START_TIME));
+                    timeToEnd = (testTimer - (elapsedTime - initTime));
                 }
                 else {
                     //it had a previous pause
-                    long queryInitTime = Long.parseLong(remainder);
-                    final long newPauseTime = System.currentTimeMillis();
-                    elapsedTime = (newPauseTime - queryInitTime);
-                    Log.i("ElapsedPause", elapsedTime + "");
+                    long lastUnpauseTime = Long.parseLong(p.getString(ParseConstants.PARTICIPANTS_KEY_PREV_UNPAUSE_TIME));
+                    elapsedTime = (elapsedTime - lastUnpauseTime);
+                    timeToEnd = Long.parseLong(remainder);
+                    timeToEnd -= elapsedTime;
                 }
-                p.put(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME, elapsedTime + "");
+                Log.i("timeToEnd", timeToEnd+"");
+                p.put(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME, timeToEnd+ "");
                 p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 1);
                 p.saveInBackground();
+            }
+
+            else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1)){
+                long unpauseTime = System.currentTimeMillis();
+                p.put(ParseConstants.PARTICIPANTS_KEY_PREV_UNPAUSE_TIME, unpauseTime);
+                p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 0); 
             }
 
         }

@@ -13,6 +13,7 @@ public class Participant extends ParseObject {
     protected String mPaused = ParseConstants.PARTICIPANTS_KEY_PAUSED;
     protected String mParticipantStatus = ParseConstants.PARTICIPANTS_KEY_PARTICIPANT_STATUS;
     protected String mRemainderTime = ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME;
+    protected String mPreviousUnpauseTime = ParseConstants.PARTICIPANTS_KEY_PREV_UNPAUSE_TIME;
 
     public String getSuffix() {
         return getString(mSuffix);
@@ -52,6 +53,14 @@ public class Participant extends ParseObject {
 
     public void setPaused(int paused) {
         put(mPaused, paused);
+    }
+
+    public String getPreviousUnpauseTime() {
+        return getString(mPreviousUnpauseTime);
+    }
+
+    public void setPreviousUnpauseTime(String previousUnpauseTime) {
+        put(mPreviousUnpauseTime, previousUnpauseTime);
     }
 
     public String getParticipantStatus() {

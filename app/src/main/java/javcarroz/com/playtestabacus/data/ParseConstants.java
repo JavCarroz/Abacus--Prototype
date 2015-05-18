@@ -43,6 +43,7 @@ public final class ParseConstants {
     public static final String PARTICIPANTS_KEY_PARTICIPANT_STATUS = "participantStatus";
     public static final String PARTICIPANTS_KEY_REMAINDER_TIME = "remainderTime";
     public static final String PARTICIPANTS_KEY_OBJECT_ID = "objectId";
+    public static final String PARTICIPANTS_KEY_PREV_UNPAUSE_TIME = "prevUnpauseTimer";
 
     //Static values used for queries related to the Parse Object 'Participants'
     //Although Parse handles booleans, we will work with int as certain status flags have more than two (2) values.
