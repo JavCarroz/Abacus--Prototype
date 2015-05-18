@@ -144,7 +144,7 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
                 //Participant has not been initialized yet!
 
                 final String initTime = System.currentTimeMillis()+ "";
-                Log.i("initClick", initTime);
+                Log.i("initClick", initTime + " "+position);
                 p.put(ParseConstants.PARTICIPANTS_KEY_START_TIME, initTime);
                 p.saveInBackground();
             }
@@ -175,8 +175,10 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
 
             else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1)){
                 long unpauseTime = System.currentTimeMillis();
-                p.put(ParseConstants.PARTICIPANTS_KEY_PREV_UNPAUSE_TIME, unpauseTime);
-                p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 0); 
+                p.put(ParseConstants.PARTICIPANTS_KEY_PREV_UNPAUSE_TIME, unpauseTime+"");
+                p.put(ParseConstants.PARTICIPANTS_KEY_PAUSED, 0);
+                p.saveInBackground();
+                Log.i("unpause:", " engage!");
             }
 
         }
