@@ -9,8 +9,9 @@
     <string name="title_section2">Archives</string>
 
         <!-- Resources for the archive fragment -->
-        <!-- <string name="empty_archive_message">No playtest has been archived!</string>  -->
-        <string name="empty_archive_message">This fragment\'s UI has not been implemented yet!</string>
+        <string name="empty_archive_message">No playtest has been archived!</string>
+        <string name="archive_failed_load_playtests_error_text">We Could not load your concluded playtests. Try again!</string>
+        <string name="archive_failed_load_playtests_error_title">We\'re sorry!</string>
 
         <!-- Resources for the inbox fragment -->
         <string name="empty_inbox_message">Nothing in development yet...</string>

@@ -24,8 +24,7 @@ import javcarroz.com.playtestabacus.PlaytestAbacusApplication;
 import javcarroz.com.playtestabacus.R;
 import javcarroz.com.playtestabacus.data.ParseConstants;
 import javcarroz.com.playtestabacus.ui.activities.PlaytestActivity;
-import javcarroz.com.playtestabacus.ui.adapters.PlaytestAdapter;
-
+import javcarroz.com.playtestabacus.ui.adapters.InboxAdapter;
 
 public class InboxFragment extends ListFragment {
 
@@ -77,11 +76,11 @@ public class InboxFragment extends ListFragment {
                     mPlaytests = playtests;
 
                     if (getListView().getAdapter() == null) {
-                        PlaytestAdapter adapter = new PlaytestAdapter(getListView().getContext(), mPlaytests);
+                        InboxAdapter adapter = new InboxAdapter(getListView().getContext(), mPlaytests);
                         setListAdapter(adapter);
                     }
                     else {
-                        ((PlaytestAdapter)getListView().getAdapter()).refill(mPlaytests);
+                        ((InboxAdapter)getListView().getAdapter()).refill(mPlaytests);
                     }
                 }
                 else {

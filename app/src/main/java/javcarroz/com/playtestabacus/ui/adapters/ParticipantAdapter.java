@@ -103,8 +103,10 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
 
             if (!isInitialized(participant)) {
                 //Starts for the first time
-                long initTestTimer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
-                holder.clock.setText(initTestTimer+"");
+                long initTestTime = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
+                SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+                String formattedDateString = formatter.format(initTestTime);
+                holder.clock.setText(formattedDateString);
                 holder.startPauseButton.setText(R.string.start_participant_text);
             }
             else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0) ) {
@@ -120,8 +122,10 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
             else if ( (isInitialized(participant) == true) && (participant.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 1) ) {
                 //resuming the countdown
                 holder.startPauseButton.setText(R.string.resume_participant_text);
-                long seconds = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME));
-                holder.clock.setText(seconds+"");
+                long remainderTestTime = Long.parseLong(participant.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME));
+                //SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+                //String formattedDateString = formatter.format(remainderTestTime);
+                holder.clock.setText((remainderTestTime/1000)+"");
             }
 
             holder.startPauseButton.setOnClickListener(this);
@@ -134,6 +138,7 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
     @Override
     public void onClick(View v) {
         //Start of: handling the events relating to the startPauseButton
+        //It might be worth to update these methods to work around nanoseconds instead with "System.nanotime();"
         if (v.getId() == R.id.startPauseButton) {
             int position = ((Integer) v.getTag());
             long testTimer = Long.parseLong(PlaytestAbacusApplication.mProjectRef.getString(ParseConstants.PLAYTESTS_KEY_TEST_TIMER));
@@ -152,7 +157,7 @@ public class ParticipantAdapter extends BaseAdapter implements View.OnClickListe
             else if ((isInitialized(p)) && (p.getInt(ParseConstants.PARTICIPANTS_KEY_PAUSED) == 0)) {
                 //Participant has been initialized and its time is currently running.
                 String remainder = p.getString(ParseConstants.PARTICIPANTS_KEY_REMAINDER_TIME);
-                long elapsedTime = System.currentTimeMillis();
+                long elapsedTime = System.nanoTime();
                 long timeToEnd;
 
                 if (remainder.isEmpty()) {

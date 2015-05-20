@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/inbox_horizontal_margin"
+        android:layout_marginRight="@dimen/inbox_horizontal_margin"
+        android:layout_marginTop="@dimen/inbox_vertical_margin"
+        android:background="@android:color/darker_gray">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconStatusView"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/ic_action_done"
+            android:contentDescription="@string/icon_item_image_representation"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/projectNameLabel"
+            android:text="@string/playtest_item_layout_dummy_text_2"
+            android:layout_toLeftOf="@+id/iconStatusView"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/inbox_item_top_margin"
+            android:textSize="16sp"
+            android:textColor="@color/sign_in_text_color"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:id="@+id/linearDateLayout"
+            android:layout_toLeftOf="@+id/iconStatusView"
+            android:layout_below="@+id/projectNameLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/playtest_item_layout_dummy_text"
+                android:id="@+id/initTimeLabel"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/material_blue_grey_800"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/playtest_item_layout_dummy_text"
+                android:paddingLeft="6dp"
+                android:id="@+id/endTimeLabel"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/material_blue_grey_800"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playtest_item_layout_dummy_text_3"
+            android:id="@+id/participantsTotalLabel"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:textSize="12sp"
+            android:textColor="@color/material_blue_grey_800"
+            android:layout_below="@+id/linearDateLayout"/>
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
