@@ -8,4 +8,4 @@ A tracking tool for GUR playtest sessions, aimed for mobile or tablet devices:
 - Access your test protocol
 - Keep an overview of test progress
 
-(Still under development)
+(Deprecated)
